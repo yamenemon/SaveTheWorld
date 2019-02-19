@@ -10,8 +10,9 @@ import UIKit
 import FirebaseCore
 import FirebaseDatabase
 
-class FeedViewController: UIViewController {
+class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
+    @IBOutlet weak var feedTableView: UITableView!
     var tableDataArray: NSMutableArray = []
     
     override func viewDidLoad() {
@@ -43,10 +44,27 @@ class FeedViewController: UIViewController {
             if completed == true {
                 print("entering")
                 self.tableDataArray = result
+                self.feedTableView.reloadData()
             }
         }
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.tableDataArray.count > 0 {
+            return self.tableDataArray.count
+        }
+        else {
+            return 0
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let staticString = "FeedTableViewCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: staticString, for: indexPath as IndexPath)
+        
+        cell.textLabel?.text = "myItem.name"
+        
+        return cell
+        
+    }
     
-
-
 }
