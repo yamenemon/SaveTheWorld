@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0DA24F221C0CDE004AC3B4 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DA24E221C0CDE004AC3B4 /* Users.swift */; };
+		0D0DA251221C177E004AC3B4 /* FacebookLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DA250221C177E004AC3B4 /* FacebookLoginManager.swift */; };
+		0D0DA253221C17CE004AC3B4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DA252221C17CE004AC3B4 /* FeedViewController.swift */; };
+		0D0DA255221C18A1004AC3B4 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DA254221C18A1004AC3B4 /* FeedViewModel.swift */; };
 		0DB49D7C22195F6300DE54E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB49D7B22195F6300DE54E3 /* AppDelegate.swift */; };
-		0DB49D7E22195F6300DE54E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB49D7D22195F6300DE54E3 /* ViewController.swift */; };
 		0DB49D8122195F6300DE54E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DB49D7F22195F6300DE54E3 /* Main.storyboard */; };
 		0DB49D8422195F6300DE54E3 /* SaveTheWorld.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0DB49D8222195F6300DE54E3 /* SaveTheWorld.xcdatamodeld */; };
 		0DB49D8622195F6400DE54E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DB49D8522195F6400DE54E3 /* Assets.xcassets */; };
@@ -30,9 +33,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D0DA24E221C0CDE004AC3B4 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		0D0DA250221C177E004AC3B4 /* FacebookLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginManager.swift; sourceTree = "<group>"; };
+		0D0DA252221C17CE004AC3B4 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		0D0DA254221C18A1004AC3B4 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		0DB49D7822195F6300DE54E3 /* SaveTheWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaveTheWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DB49D7B22195F6300DE54E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0DB49D7D22195F6300DE54E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0DB49D8022195F6300DE54E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0DB49D8322195F6300DE54E3 /* SaveTheWorld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SaveTheWorld.xcdatamodel; sourceTree = "<group>"; };
 		0DB49D8522195F6400DE54E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,7 +100,10 @@
 			isa = PBXGroup;
 			children = (
 				0DB49D7B22195F6300DE54E3 /* AppDelegate.swift */,
-				0DB49D7D22195F6300DE54E3 /* ViewController.swift */,
+				0D0DA24E221C0CDE004AC3B4 /* Users.swift */,
+				0D0DA252221C17CE004AC3B4 /* FeedViewController.swift */,
+				0D0DA254221C18A1004AC3B4 /* FeedViewModel.swift */,
+				0D0DA250221C177E004AC3B4 /* FacebookLoginManager.swift */,
 				0DB49D7F22195F6300DE54E3 /* Main.storyboard */,
 				0DB49D8522195F6400DE54E3 /* Assets.xcassets */,
 				9A61D314221AF27100639919 /* GoogleService-Info.plist */,
@@ -357,8 +366,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0DA24F221C0CDE004AC3B4 /* Users.swift in Sources */,
 				0DB49D8422195F6300DE54E3 /* SaveTheWorld.xcdatamodeld in Sources */,
-				0DB49D7E22195F6300DE54E3 /* ViewController.swift in Sources */,
+				0D0DA255221C18A1004AC3B4 /* FeedViewModel.swift in Sources */,
+				0D0DA251221C177E004AC3B4 /* FacebookLoginManager.swift in Sources */,
+				0D0DA253221C17CE004AC3B4 /* FeedViewController.swift in Sources */,
 				0DB49D7C22195F6300DE54E3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
