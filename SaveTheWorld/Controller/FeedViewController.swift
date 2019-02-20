@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
+    @IBOutlet weak var helpTextBtn: UIButton!
+    @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var feedTableView: UITableView!
     var tableDataArray: NSMutableArray = []
     
@@ -39,6 +41,10 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //                             "next_eligible_date": defaultTimeZoneStr]]
         //        ref.child("users").childByAutoId().updateChildValues(post)
         //        ref.child("users").childByAutoId().updateChildValues(posts)
+        self.tabBarController?.navigationItem.title = "Help Needed"
+
+        feedTableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedTableViewCell")
+
         let feedViewmodel = FeedViewModel()
         feedViewmodel.getAllDataFromFirebase { completed, result in
             if completed == true {
@@ -48,8 +54,12 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func viewWillLayoutSubviews() {
+        helpTextBtn.layer.cornerRadius = 15.0
+        helpTextBtn.layer.borderWidth = 1.0
+        helpTextBtn.layer.borderColor = UIColor.black.cgColor
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
         if self.tableDataArray.count > 0 {
             return self.tableDataArray.count
         }
@@ -57,14 +67,27 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return 0
         }
     }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let staticString = "FeedTableViewCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: staticString, for: indexPath as IndexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: staticString, for: indexPath as IndexPath) as? FeedTableViewCell
+        cell?.backgroundColor = UIColor.lightText
+        let userObject = self.tableDataArray[indexPath.row] as! Users
+        cell?.userHelpText.text = userObject.help
         
-        cell.textLabel?.text = "myItem.name"
+        return cell!
         
-        return cell
-        
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 83
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 3
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 3
     }
     
 }
