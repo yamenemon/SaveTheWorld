@@ -10,7 +10,7 @@ import UIKit
 import FirebaseCore
 import FirebaseDatabase
 import SCLAlertView
-
+import FBSDKLoginKit
 
 
 class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -18,6 +18,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var helpTextBtn: UIButton!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var feedTableView: UITableView!
+    var userDataDic: NSMutableDictionary?
     var tableDataArray: NSMutableArray = []
     var alertView: SCLAlertView!
     
@@ -45,7 +46,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //                             "next_eligible_date": defaultTimeZoneStr]]
         //        ref.child("users").childByAutoId().updateChildValues(post)
         //        ref.child("users").childByAutoId().updateChildValues(posts)
-        self.tabBarController?.navigationItem.title = "Help Needed"
+        self.navigationItem.title = "Help"
 
         feedTableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedTableViewCell")
 
@@ -62,6 +63,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         helpTextBtn.layer.cornerRadius = 15.0
         helpTextBtn.layer.borderWidth = 1.0
         helpTextBtn.layer.borderColor = UIColor.black.cgColor
+
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         if self.tableDataArray.count > 0 {
@@ -74,28 +76,35 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBAction func helpBtnAction(_ sender: Any) {
 //        let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpWindow") as! HelpPopUpViewController
 
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false, showCircularIcon: false
-        )
-        alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Facebook", target:self, selector:#selector(FeedViewController.facebookBtnAction))
-        alertView.addButton("Twitter") {
-            print("Twitter button tapped")
+        if FBSDKAccessToken.current() == nil && FBSDKAccessToken.currentAccessTokenIsActive() == false{
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false, showCircularIcon: false
+            )
+            alertView = SCLAlertView(appearance: appearance)
+            alertView.addButton("Facebook", target:self, selector:#selector(FeedViewController.facebookBtnAction))
+            alertView.addButton("Twitter") {
+                print("Twitter button tapped")
+            }
+            alertView.showSuccess("Login", subTitle: "Before Post Please Login")
         }
-        alertView.showSuccess("Login", subTitle: "Before Post Please Login")
+        else {
+            facebookBtnAction()
+        }
+        
     }
     @objc func facebookBtnAction() {
         FacebookSignInManager.basicInfoWithCompletionHandler(self) { (dataDictionary:Dictionary<String, AnyObject>?, error:NSError?) -> Void in
             if let dic = dataDictionary {
                 print(dic)
+                let viewcontroller : HelpPopUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPostWindow") as! HelpPopUpViewController
+                viewcontroller.userData = NSMutableDictionary(dictionary: dic)
+                self.navigationController?.pushViewController(viewcontroller, animated: true)
             }
-            if let dic = error {
+            else if let dic = error {
                 print(dic)
             }
         }
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }

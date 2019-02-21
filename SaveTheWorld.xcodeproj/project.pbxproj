@@ -21,6 +21,7 @@
 		0DB49D9422195F6400DE54E3 /* SaveTheWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB49D9322195F6400DE54E3 /* SaveTheWorldTests.swift */; };
 		71A52F6941EB1FC9449B8704 /* Pods_SaveTheWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308B98ED34F934367ED3B4C4 /* Pods_SaveTheWorldTests.framework */; };
 		7578F3DBF1E7DF4647AE41FD /* Pods_SaveTheWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEDACBE5A4935322EA89CA2D /* Pods_SaveTheWorld.framework */; };
+		9A05DD39221F0C88009A14DC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A05DD38221F0C88009A14DC /* CustomTextField.swift */; };
 		9A38BCB0221DAB7700511361 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A38BCAF221DAB7700511361 /* Singleton.swift */; };
 		9A38BCB2221DABAE00511361 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A38BCB1221DABAE00511361 /* Constants.swift */; };
 		9A38BCB4221DB07900511361 /* HelpPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A38BCB3221DB07900511361 /* HelpPopUpViewController.swift */; };
@@ -59,6 +60,7 @@
 		308B98ED34F934367ED3B4C4 /* Pods_SaveTheWorldTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveTheWorldTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3870420D699946F95BEA5B36 /* Pods-SaveTheWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveTheWorld.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaveTheWorld/Pods-SaveTheWorld.debug.xcconfig"; sourceTree = "<group>"; };
 		410AEF8418E38E5AB5D60252 /* Pods-SaveTheWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveTheWorld.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaveTheWorld/Pods-SaveTheWorld.release.xcconfig"; sourceTree = "<group>"; };
+		9A05DD38221F0C88009A14DC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9A38BCAF221DAB7700511361 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		9A38BCB1221DABAE00511361 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9A38BCB3221DB07900511361 /* HelpPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPopUpViewController.swift; sourceTree = "<group>"; };
@@ -92,8 +94,8 @@
 		0D0DA256221C1BFA004AC3B4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0D0DA252221C17CE004AC3B4 /* FeedViewController.swift */,
 				0DB49D7B22195F6300DE54E3 /* AppDelegate.swift */,
+				0D0DA252221C17CE004AC3B4 /* FeedViewController.swift */,
 				9A38BCB3221DB07900511361 /* HelpPopUpViewController.swift */,
 			);
 			path = Controller;
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				0D0DA25E221C2579004AC3B4 /* FeedTableViewCell.swift */,
+				9A05DD38221F0C88009A14DC /* CustomTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D0DA24F221C0CDE004AC3B4 /* Users.swift in Sources */,
+				9A05DD39221F0C88009A14DC /* CustomTextField.swift in Sources */,
 				0DB49D8422195F6300DE54E3 /* SaveTheWorld.xcdatamodeld in Sources */,
 				0D0DA260221C2579004AC3B4 /* FeedTableViewCell.swift in Sources */,
 				0D0DA255221C18A1004AC3B4 /* FeedViewModel.swift in Sources */,

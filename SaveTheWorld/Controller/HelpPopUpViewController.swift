@@ -10,12 +10,21 @@ import UIKit
 
 class HelpPopUpViewController: UIViewController {
 
+    public var userData: NSMutableDictionary?
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+       
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        print(userData as Any)
+        if let userDataDic = userData {
+            print(userDataDic)
+        }
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        self.title = "Post Description"
+    }
 
     /*
     // MARK: - Navigation
