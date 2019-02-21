@@ -9,6 +9,9 @@
 import UIKit
 import FirebaseCore
 import FirebaseDatabase
+import SCLAlertView
+
+
 
 class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -16,6 +19,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var feedTableView: UITableView!
     var tableDataArray: NSMutableArray = []
+    var alertView: SCLAlertView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,13 +71,38 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return 0
         }
     }
+    @IBAction func helpBtnAction(_ sender: Any) {
+//        let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpWindow") as! HelpPopUpViewController
+
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false, showCircularIcon: false
+        )
+        alertView = SCLAlertView(appearance: appearance)
+        alertView.addButton("Facebook", target:self, selector:#selector(FeedViewController.facebookBtnAction))
+        alertView.addButton("Twitter") {
+            print("Twitter button tapped")
+        }
+        alertView.showSuccess("Login", subTitle: "Before Post Please Login")
+    }
+    @objc func facebookBtnAction() {
+        FacebookSignInManager.basicInfoWithCompletionHandler(self) { (dataDictionary:Dictionary<String, AnyObject>?, error:NSError?) -> Void in
+            if let dic = dataDictionary {
+                print(dic)
+            }
+            if let dic = error {
+                print(dic)
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let staticString = "FeedTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: staticString, for: indexPath as IndexPath) as? FeedTableViewCell
-        cell?.backgroundColor = UIColor.lightText
+        cell?.backgroundColor = Singleton.sharedInstance().hexStringToUIColor(hex: "0x154521")
         let userObject = self.tableDataArray[indexPath.row] as! Users
         cell?.userHelpText.text = userObject.help
         

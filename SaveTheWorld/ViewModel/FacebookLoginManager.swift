@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import FBSDKLoginKit
+import Reachability
+import MBProgressHUD
 
 class FacebookSignInManager: NSObject {
     typealias LoginCompletionBlock = (Dictionary<String, AnyObject>?, NSError?) -> Void
@@ -17,8 +19,15 @@ class FacebookSignInManager: NSObject {
     class func basicInfoWithCompletionHandler(_ fromViewController:AnyObject, onCompletion: @escaping LoginCompletionBlock) -> Void {
         
         //Check internet connection if no internet connection then return
-        
-        
+        let reachability = Reachability()!
+        reachability.whenReachable = { _ in
+            
+        }
+        reachability.whenUnreachable = { _ in
+            let global = Singleton.sharedInstance()
+            global.showAlert(controllerTitle:Constants.NETWORK_ERROR, alertCancelTitle:Constants.ALERT_SERVER_OK, alertMessage:Constants.NETWORK_MESSAGE)
+            return
+        }
         self.getBaicInfoWithCompletionHandler(fromViewController) { (dataDictionary:Dictionary<String, AnyObject>?, error: NSError?) -> Void in
             onCompletion(dataDictionary, error)
         }
@@ -31,7 +40,7 @@ class FacebookSignInManager: NSObject {
     }
     
     //MARK:- Private functions
-    class fileprivate func getBaicInfoWithCompletionHandler(_ fromViewController:AnyObject, onCompletion: @escaping LoginCompletionBlock) -> Void {
+    class fileprivate func getBaicInfoWithCompletionHandler(_ currentController:AnyObject, onCompletion: @escaping LoginCompletionBlock) -> Void {
         let permissionDictionary = [
             "fields" : "id,name,first_name,last_name,gender,email,birthday,picture.type(large)",
             //"locale" : "en_US"
@@ -47,7 +56,7 @@ class FacebookSignInManager: NSObject {
                 })
             
         } else {
-            FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: fromViewController as? UIViewController, handler: { (result, error) -> Void in
+            FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: currentController as? UIViewController, handler: { (result, error) -> Void in
                 if error != nil {
                     FBSDKLoginManager().logOut()
                     if let error = error as NSError? {

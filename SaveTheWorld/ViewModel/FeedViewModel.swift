@@ -35,4 +35,7 @@ import FirebaseDatabase
             completionhandler(true,tableDataArray)
         })
     }
+    func setUserDataInFirebase(completionhandler : @escaping (Bool,NSMutableArray)-> ()){
+        
+    }
 }

@@ -13,7 +13,8 @@ target 'SaveTheWorld' do
 	pod 'FacebookShare'
 	pod 'MBProgressHUD', '~> 1.1.0'
 	pod 'TwitterKit'
-	pod 'ReachabilitySwift' 
+	pod 'ReachabilitySwift'
+    pod 'SCLAlertView'
 
   target 'SaveTheWorldTests' do
     inherit! :search_paths
