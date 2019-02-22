@@ -24,6 +24,8 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        navigationController?.navigationBar.tintColor = UIColor.red
         // Do any additional setup after loading the view, typically from a nib.
         //        var ref: DatabaseReference!
         //        let formatter = DateFormatter()

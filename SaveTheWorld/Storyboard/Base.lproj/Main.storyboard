@@ -223,6 +223,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="R8J-hN-gyp" id="k5Q-0S-GWg"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="st6-TB-LxN">
                                         <rect key="frame" x="168.5" y="152" width="198.5" height="29"/>
@@ -247,12 +250,15 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="R8J-hN-gyp" id="3wc-BD-QV5"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Age" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GAf-7x-WZf" customClass="MyCustomTextField" customModule="SaveTheWorld" customModuleProvider="target">
                                         <rect key="frame" x="168.5" y="298" width="198.5" height="29"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                     </textField>
                                     <textField opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contact Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nfd-KG-s8R" customClass="MyCustomTextField" customModule="SaveTheWorld" customModuleProvider="target">
                                         <rect key="frame" x="168.5" y="335" width="198.5" height="29"/>
@@ -265,6 +271,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="R8J-hN-gyp" id="mol-bs-WJ4"/>
+                                        </connections>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Please add some description about patient" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KOM-kE-9SO">
                                         <rect key="frame" x="17" y="410" width="350" height="44"/>
