@@ -15,6 +15,7 @@ target 'SaveTheWorld' do
 	pod 'TwitterKit'
 	pod 'ReachabilitySwift'
     pod 'SCLAlertView'
+    pod 'SDWebImage', '~> 4.0'
 
   target 'SaveTheWorldTests' do
     inherit! :search_paths

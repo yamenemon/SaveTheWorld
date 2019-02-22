@@ -85,6 +85,9 @@ PODS:
   - nanopb/encode (0.3.901)
   - ReachabilitySwift (4.3.0)
   - SCLAlertView (0.8)
+  - SDWebImage (4.4.5):
+    - SDWebImage/Core (= 4.4.5)
+  - SDWebImage/Core (4.4.5)
   - TwitterCore (3.2.0)
   - TwitterKit (3.4.2):
     - TwitterCore (>= 3.2.0)
@@ -98,6 +101,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.1.0)
   - ReachabilitySwift
   - SCLAlertView
+  - SDWebImage (~> 4.0)
   - TwitterKit
 
 SPEC REPOS:
@@ -122,6 +126,7 @@ SPEC REPOS:
     - nanopb
     - ReachabilitySwift
     - SCLAlertView
+    - SDWebImage
     - TwitterCore
     - TwitterKit
 
@@ -146,9 +151,10 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  SDWebImage: ecc03494e973b93b80213649d32175f8d2d17d4d
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: 5d1a377924f114709ffece83dc64f9b752b32626
+PODFILE CHECKSUM: 637ba15db11e47fd0f7feccb4b22203af9929661
 
 COCOAPODS: 1.5.3
