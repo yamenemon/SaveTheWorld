@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class HelpPopUpViewController: UIViewController {
+class HelpPopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
@@ -24,11 +24,25 @@ class HelpPopUpViewController: UIViewController {
     
     
     public var userData: NSMutableDictionary?
+    let typesOfOrgan = ["Blood","Kidney","Heart","Lung","Lever","Eye"]
+    let typesOfSex = ["Male","Female"]
+    let typesOfBlood = ["O-","O+","A-","A+","B-","B+","AB-","AB+"]
+
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-       
+        
+        DispatchQueue.main.async(execute: {
+            let pickerView = UIPickerView()
+            pickerView.delegate = self
+            pickerView.dataSource = self
+            self.needTextField.inputView = pickerView
+            self.patientSex.inputView = pickerView
+            self.patientBloodGroupField.inputView = pickerView
+        })
     }
     override func viewWillLayoutSubviews() {
         userImage.layer.cornerRadius = (userImage.frame.size.height)/2
@@ -53,15 +67,48 @@ class HelpPopUpViewController: UIViewController {
         }
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // Sets number of columns in picker view
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-    */
+    
+    // Sets the number of rows in the picker view
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 0 {
+            return typesOfOrgan.count
+        } else if pickerView.tag == 3 {
+            return typesOfSex.count
+        }
+        else if pickerView.tag == 6 {
+            return typesOfBlood.count
+        }
+    return 0
+    }
+    
+    // This function sets the text of the picker view to the content of the "salutations" array
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView.tag == 0 {
+            return typesOfOrgan[row]
+        } else if pickerView.tag == 3 {
+            return typesOfSex[row]
+        } else if pickerView.tag == 6 {
+            return typesOfBlood[row]
+        }
+    return nil
+    }
+    
+    // When user selects an option, this function will set the text of the text field to reflect
+    // the selected option.
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 0 {
+            needTextField.text = typesOfOrgan[row]
+        } else if pickerView.tag == 3 {
+            needTextField.text = typesOfSex[row]
+        } else if pickerView.tag == 6 {
+            needTextField.text = typesOfBlood[row]
+        }
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
