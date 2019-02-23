@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 import CoreLocation
 
-class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, getUserLocationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, getUserLocationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextViewDelegate {
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
@@ -34,7 +34,10 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     let typesOfSex = ["Male","Female"]
     let typesOfBlood = ["O-","O+","A-","A+","B-","B+","AB-","AB+"]
     let pickerView = UIPickerView()
-    var postData: NSMutableDictionary?
+    
+    var patientLatLong : CLLocationCoordinate2D? = nil
+    let postData = HelpPost()
+    let feedViewModel = FeedViewModel()
     let global = Singleton.sharedInstance()
     var imagePicker = UIImagePickerController()
 
@@ -44,15 +47,42 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let logoutBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(logoutUser))
-        self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
+        let saveBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(logoutUser))
+        self.navigationItem.rightBarButtonItem  = saveBarButtonItem
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height/2
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        currentTextField.resignFirstResponder()
+        patientDescriptionField.resignFirstResponder()
+    }
+
     override func viewWillLayoutSubviews() {
         userImage.layer.cornerRadius = (userImage.frame.size.height)/2
         userImage.clipsToBounds = true
         patientDescriptionField.layer.borderColor = UIColor.lightGray.cgColor
         patientDescriptionField.layer.borderWidth = 1.0
         patientDescriptionField.layer.cornerRadius = 7.0
+        patientDescriptionField.text = "Please write something about patient"
+        patientDescriptionField.textColor = UIColor.gray
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
@@ -63,15 +93,40 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     func sendUserLocation(userLocationName userLocation: String, coordinate:CLLocationCoordinate2D) {
         print(userLocation)
         print(coordinate)
+        patientLatLong = coordinate
         self.LocationTextField.text = userLocation
     }
     @objc func logoutUser() {
-        
+        postData.postUserNeed = self.needTextField.text
+        postData.postUserLocation = self.LocationTextField.text
+        postData.postUserLocationLat = patientLatLong?.latitude
+        postData.postUserLocationLong = patientLatLong?.longitude
+        postData.postUserName = self.patientNameTextField.text
+        postData.postUserRelation = self.patientRelationTextField.text
+        postData.postUserSex = self.patientSex.text
+        if let age = self.patientAge.text {
+            postData.postUserAge = Double("\(age)")
+        }
+        if let contact = self.patientAge.text {
+            postData.postUserContact = Double("\(contact)")
+        }
+        postData.postUserBloodGroup = self.patientBloodGroupField.text
+        postData.postUserDescription = self.patientDescriptionField.text
+        postData.postUserImageOne = self.addImageBtnOne.imageView?.image
+        postData.postUserImageTwo = self.addImageBtnTwo.imageView?.image
+        feedViewModel.setUserPostDataInFirebase(userData: postData) { completed in
+            if completed == true {
+                print ("save done stop spinner")
+            }
+        }
     }
     func setUserDataInField(userData: NSMutableDictionary) {
+        postData.postName = userData["name"] as? String
+        postData.postUserEmail = userData["email"] as? String
         userName.text = userData["name"] as? String
         if let imageURL = ((userData["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
             userImage.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "SaveLives"))
+            postData.postUserImageUrl = imageURL
         }
     }
     @IBAction func imageBtnAction(_ sender: Any) {
@@ -154,7 +209,18 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
         }
     }
     //MARK: - TextField Delegate
-
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = nil
+        
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if textView.text.isEmpty {
+            textView.textColor = UIColor.black
+        }
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        return newText.count < 200;
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         self.pickerView.delegate = self
@@ -181,20 +247,14 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
             label.text = labelTexts[3]
             currentTextField.inputView = pickerView
         } else if currentTextField == self.LocationTextField {
-            self.view.endEditing(true)
-
             DispatchQueue.main.async {
+                self.view.endEditing(true)
                 self.global.showProgessBar()
                 let viewcontroller : LocationSearchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearch") as! LocationSearchViewController
                 viewcontroller.delegate = self
                 self.navigationController?.pushViewController(viewcontroller, animated: true)
             }
         }
-    }
-    //MARK: - Touch Delegate
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
 
 }

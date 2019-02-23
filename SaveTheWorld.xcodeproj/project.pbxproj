@@ -29,6 +29,7 @@
 		9A61D315221AF27100639919 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A61D314221AF27100639919 /* GoogleService-Info.plist */; };
 		9AC806A0222178610026B904 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC8069F222178600026B904 /* LocationSearchTable.swift */; };
 		9AC806A122217D7B0026B904 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1257922221439700EF2EB1 /* LocationSearchViewController.swift */; };
+		9AFA00092221C4C7009BABFA /* HelpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA00082221C4C7009BABFA /* HelpPost.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		9A38BCB7221E279400511361 /* SaveTheWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaveTheWorld.entitlements; sourceTree = "<group>"; };
 		9A61D314221AF27100639919 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9AC8069F222178600026B904 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
+		9AFA00082221C4C7009BABFA /* HelpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPost.swift; sourceTree = "<group>"; };
 		A171475D4C027EABC5B57AD7 /* Pods-SaveTheWorldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveTheWorldTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaveTheWorldTests/Pods-SaveTheWorldTests.release.xcconfig"; sourceTree = "<group>"; };
 		FEDACBE5A4935322EA89CA2D /* Pods_SaveTheWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveTheWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				0D0DA24E221C0CDE004AC3B4 /* Users.swift */,
+				9AFA00082221C4C7009BABFA /* HelpPost.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				9A38BCB4221DB07900511361 /* HelpPopUpViewController.swift in Sources */,
 				0D0DA251221C177E004AC3B4 /* FacebookLoginManager.swift in Sources */,
 				9A38BCB0221DAB7700511361 /* Singleton.swift in Sources */,
+				9AFA00092221C4C7009BABFA /* HelpPost.swift in Sources */,
 				0D0DA253221C17CE004AC3B4 /* FeedViewController.swift in Sources */,
 				0DB49D7C22195F6300DE54E3 /* AppDelegate.swift in Sources */,
 				9A38BCB2221DABAE00511361 /* Constants.swift in Sources */,

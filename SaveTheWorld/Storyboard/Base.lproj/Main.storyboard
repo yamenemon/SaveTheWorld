@@ -232,6 +232,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="R8J-hN-gyp" id="BLS-aT-uud"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Relation with patient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wyq-Ce-fzO" customClass="MyCustomTextField" customModule="SaveTheWorld" customModuleProvider="target">
                                         <rect key="frame" x="217.5" y="225" width="149.5" height="29"/>
@@ -283,6 +286,9 @@
                                         <color key="backgroundColor" red="0.89441344808024792" green="0.90326902677411169" blue="0.90326902677411169" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="R8J-hN-gyp" id="DOl-jX-qda"/>
+                                        </connections>
                                     </textView>
                                     <button opaque="NO" tag="2" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tEe-El-G7Y">
                                         <rect key="frame" x="305" y="458" width="50" height="50"/>

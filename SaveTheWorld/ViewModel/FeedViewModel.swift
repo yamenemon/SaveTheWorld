@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 @objc public class FeedViewModel: NSObject {
 
+    let postData = HelpPost()
+
     func getAllDataFromFirebase(completionhandler : @escaping (Bool,NSMutableArray)-> ()){
         let tableDataArray: NSMutableArray = []
 
@@ -35,7 +37,40 @@ import FirebaseDatabase
             completionhandler(true,tableDataArray)
         })
     }
-    func setUserDataInFirebase(completionhandler : @escaping (Bool,NSMutableArray)-> ()){
-        
+    func setUserPostDataInFirebase(userData: HelpPost, completionhandler : @escaping (Bool)-> ()){
+        print(userData)
+        userData.postID = UUID().uuidString
+        /*
+         public var postID: String?
+         public var postName: String?
+         public var postUserImageUrl: String?
+         public var postUserEmail: String?
+         public var postUserNeed: String?
+         public var postUserLocation: String?
+         public var postUserLocationLat: Double?
+         public var postUserLocationLong: Double?
+         public var postUserName: String?
+         public var postUserRelation: String?
+         public var postUserSex: String?
+         public var postUserAge: Double?
+         public var postUserContact: Double?
+         public var postUserBloodGroup: String?
+         public var postUserDescription: String?
+         public var postUserImageOne: UIImage?
+         public var postUserImageTwo: UIImage?
+         public var postDate: Date?
+         */
+        if (userData.postName != nil)
+            && ((userData.postUserImageUrl != nil)) && ((userData.postUserEmail != nil))
+            && ((userData.postUserNeed != nil)) && ((userData.postUserLocation != nil))
+            && ((userData.postUserLocationLat != nil)) && ((userData.postUserLocationLong != nil))
+            && ((userData.postUserName != nil)) && ((userData.postUserRelation != nil))
+            && ((userData.postUserSex != nil)) && ((userData.postUserAge != nil))
+            && ((userData.postUserContact != nil)) && ((userData.postUserBloodGroup != nil))
+            && ((userData.postUserDescription != nil)){
+            
+            
+            
+        }
     }
 }
