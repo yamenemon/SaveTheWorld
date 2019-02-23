@@ -10,10 +10,8 @@ import UIKit
 import SDWebImage
 import CoreLocation
 
-class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, getUserLocationDelegate {
+class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, getUserLocationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
-
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var needTextField: MyCustomTextField!
@@ -26,6 +24,8 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     @IBOutlet weak var patientBloodGroupField: MyCustomTextField!
     @IBOutlet weak var patientDescriptionField: UITextView!
     
+    @IBOutlet weak var addImageBtnOne: UIButton!
+    @IBOutlet weak var addImageBtnTwo: UIButton!
     
     public var userData: NSMutableDictionary?
     var currentTextField =  UITextField()
@@ -35,6 +35,8 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     let typesOfBlood = ["O-","O+","A-","A+","B-","B+","AB-","AB+"]
     let pickerView = UIPickerView()
     var postData: NSMutableDictionary?
+    let global = Singleton.sharedInstance()
+    var imagePicker = UIImagePickerController()
 
     //MARK: - ViewController Delegate -
 
@@ -44,14 +46,13 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
         
         let logoutBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(logoutUser))
         self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
-        
-        
     }
     override func viewWillLayoutSubviews() {
         userImage.layer.cornerRadius = (userImage.frame.size.height)/2
         userImage.clipsToBounds = true
         patientDescriptionField.layer.borderColor = UIColor.lightGray.cgColor
         patientDescriptionField.layer.borderWidth = 1.0
+        patientDescriptionField.layer.cornerRadius = 7.0
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
@@ -73,6 +74,35 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
             userImage.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "SaveLives"))
         }
     }
+    @IBAction func imageBtnAction(_ sender: Any) {
+        let btn = sender as! UIButton
+        openImageGallery(button:btn)
+    }
+    func openImageGallery(button:UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum;
+            imagePicker.allowsEditing = false
+            imagePicker.view.tag = button.tag
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        self.dismiss(animated: true, completion: { () -> Void in
+            let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            
+            if picker.view.tag == self.addImageBtnOne.tag {
+                self.addImageBtnOne.setImage(chosenImage, for: .normal)
+            } else {
+                self.addImageBtnTwo.setImage(chosenImage, for: .normal)
+            }
+        })
+        
+    }
+    
     //MARK: - PickerView Delegate and DataSources -
     // Sets number of columns in picker view
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -151,14 +181,15 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
             label.text = labelTexts[3]
             currentTextField.inputView = pickerView
         } else if currentTextField == self.LocationTextField {
+            self.view.endEditing(true)
+
             DispatchQueue.main.async {
-                self.view.endEditing(true)
+                self.global.showProgessBar()
                 let viewcontroller : LocationSearchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearch") as! LocationSearchViewController
                 viewcontroller.delegate = self
                 self.navigationController?.pushViewController(viewcontroller, animated: true)
             }
         }
-
     }
     //MARK: - Touch Delegate
     

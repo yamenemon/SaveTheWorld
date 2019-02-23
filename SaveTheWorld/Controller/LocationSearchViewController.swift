@@ -24,6 +24,7 @@ class LocationSearchViewController: UIViewController,MKMapViewDelegate,CLLocatio
     let locationManager = CLLocationManager()
     @IBOutlet weak var mapView: MKMapView!
     var selectedPin: MKPlacemark?
+    let global = Singleton.sharedInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,11 @@ class LocationSearchViewController: UIViewController,MKMapViewDelegate,CLLocatio
         locationSearchTable.mapView = mapView
         locationSearchTable.handleMapSearchDelegate = self
         
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.global.hideProgessBar()
+        }
     }
     private func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         switch status {
