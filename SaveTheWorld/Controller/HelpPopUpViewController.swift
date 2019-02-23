@@ -8,12 +8,16 @@
 
 import UIKit
 import SDWebImage
+import CoreLocation
 
-class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, getUserLocationDelegate {
+    
+    
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var needTextField: MyCustomTextField!
+    @IBOutlet weak var LocationTextField: MyCustomTextField!
     @IBOutlet weak var patientNameTextField: MyCustomTextField!
     @IBOutlet weak var patientRelationTextField: MyCustomTextField!
     @IBOutlet weak var patientSex: MyCustomTextField!
@@ -26,6 +30,7 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     public var userData: NSMutableDictionary?
     var currentTextField =  UITextField()
     let typesOfOrgan = ["Blood","Kidney","Heart","Lung","Lever","Eye"]
+    let typeOfRelation = ["Father","Mother","Sister","Brother","Cousine","Friend","Colleague","Other"]
     let typesOfSex = ["Male","Female"]
     let typesOfBlood = ["O-","O+","A-","A+","B-","B+","AB-","AB+"]
     let pickerView = UIPickerView()
@@ -39,6 +44,8 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
         
         let logoutBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(logoutUser))
         self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
+        
+        
     }
     override func viewWillLayoutSubviews() {
         userImage.layer.cornerRadius = (userImage.frame.size.height)/2
@@ -48,9 +55,14 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
-        self.title = "Post Description"
+        self.title = "Post"
         guard let userInfo = userData else { return } //handle the error
         setUserDataInField(userData: userInfo)
+    }
+    func sendUserLocation(userLocationName userLocation: String, coordinate:CLLocationCoordinate2D) {
+        print(userLocation)
+        print(coordinate)
+        self.LocationTextField.text = userLocation
     }
     @objc func logoutUser() {
         
@@ -71,10 +83,11 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if currentTextField == self.needTextField {
             return typesOfOrgan.count
+        }else if currentTextField == self.patientRelationTextField {
+            return typeOfRelation.count
         } else if currentTextField == self.patientSex {
             return typesOfSex.count
-        }
-        else if currentTextField == self.patientBloodGroupField {
+        }else if currentTextField == self.patientBloodGroupField {
             return typesOfBlood.count
         }
         return 0
@@ -86,6 +99,8 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
 
         if currentTextField == self.needTextField {
             return typesOfOrgan[row]
+        }else if currentTextField == self.patientRelationTextField {
+            return typeOfRelation[row]
         } else if currentTextField == self.patientSex {
             return typesOfSex[row]
         } else if currentTextField == self.patientBloodGroupField {
@@ -100,6 +115,8 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if currentTextField == self.needTextField {
             needTextField.text = typesOfOrgan[row]
+        }else if currentTextField == self.patientRelationTextField {
+            patientRelationTextField.text = typeOfRelation[row]
         } else if currentTextField == self.patientSex {
             patientSex.text = typesOfSex[row]
         } else if currentTextField == self.patientBloodGroupField {
@@ -109,19 +126,42 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
     //MARK: - TextField Delegate
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         currentTextField = textField
+        
+        let labelTexts = ["Organs","Relation","Sex","Blood Group"]
+        let label: UILabel = UILabel.init(frame: CGRect(x: 0, y: 5, width: self.view.frame.width, height: 40))
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+        label.backgroundColor = UIColor.lightGray
+        label.textAlignment = .center
+        pickerView.addSubview(label)
+
         if currentTextField == self.needTextField {
+            label.text = labelTexts[0]
+            currentTextField.inputView = pickerView
+        }else if currentTextField == self.patientRelationTextField {
+            label.text = labelTexts[1]
             currentTextField.inputView = pickerView
         } else if currentTextField == self.patientSex {
+            label.text = labelTexts[2]
             currentTextField.inputView = pickerView
         } else if currentTextField == self.patientBloodGroupField {
+            label.text = labelTexts[3]
             currentTextField.inputView = pickerView
+        } else if currentTextField == self.LocationTextField {
+            DispatchQueue.main.async {
+                self.view.endEditing(true)
+                let viewcontroller : LocationSearchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearch") as! LocationSearchViewController
+                viewcontroller.delegate = self
+                self.navigationController?.pushViewController(viewcontroller, animated: true)
+            }
         }
+
     }
     //MARK: - Touch Delegate
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

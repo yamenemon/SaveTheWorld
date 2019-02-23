@@ -32,6 +32,7 @@ import Foundation
     
     //Alert controller message at mapview
     @objc public static var ALERT_AUTH_MESSAGE = "Location services were previously denied. Please enable location services for this app in Settings."
+    @objc public static var ALERT_SEARCH_ERROR = "No data found, Please try different search area"
     @objc public static var NETWORK_MESSAGE = "No Internet.Please check your internet settings."
 
     @objc public static var ALERT_AUTH_ERROR =  "Authentication Error!"
