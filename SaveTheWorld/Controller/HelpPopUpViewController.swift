@@ -256,6 +256,13 @@ class HelpPopUpViewController: UIViewController,UITextFieldDelegate, UIPickerVie
             }
         }
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.patientAge {
+            let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            return newText.count < 3;
+        }
+        return true
+    }
 
 }
 
