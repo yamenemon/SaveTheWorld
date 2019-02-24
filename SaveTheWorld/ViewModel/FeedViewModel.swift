@@ -39,27 +39,22 @@ import FirebaseDatabase
     }
     func setUserPostDataInFirebase(userData: HelpPost, completionhandler : @escaping (Bool)-> ()){
         print(userData)
-        userData.postID = UUID().uuidString
-        /*
-         public var postID: String?
-         public var postName: String?
-         public var postUserImageUrl: String?
-         public var postUserEmail: String?
-         public var postUserNeed: String?
-         public var postUserLocation: String?
-         public var postUserLocationLat: Double?
-         public var postUserLocationLong: Double?
-         public var postUserName: String?
-         public var postUserRelation: String?
-         public var postUserSex: String?
-         public var postUserAge: Double?
-         public var postUserContact: Double?
-         public var postUserBloodGroup: String?
-         public var postUserDescription: String?
-         public var postUserImageOne: UIImage?
-         public var postUserImageTwo: UIImage?
-         public var postDate: Date?
-         */
+        
+        let dateFormatter : DateFormatter = DateFormatter()
+        //        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MMM-dd HH:mm:ss"
+//        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00") //Current time zone
+        dateFormatter.timeZone = TimeZone.current
+
+        let date = Date()
+        let dateString = dateFormatter.string(from: date)
+        
+        //according to date format your date string
+        guard let currentdate = dateFormatter.date(from: dateString) else {
+            fatalError()
+        }
+        print(currentdate)
+        
         if (userData.postName != nil)
             && ((userData.postUserImageUrl != nil)) && ((userData.postUserEmail != nil))
             && ((userData.postUserNeed != nil)) && ((userData.postUserLocation != nil))
@@ -69,7 +64,8 @@ import FirebaseDatabase
             && ((userData.postUserContact != nil)) && ((userData.postUserBloodGroup != nil))
             && ((userData.postUserDescription != nil)){
             
-            
+            userData.postID = UUID().uuidString
+            userData.postDate = currentdate
             
         }
     }
